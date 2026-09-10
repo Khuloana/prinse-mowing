@@ -304,6 +304,16 @@
             flex-direction: column;
             justify-content: flex-end;
             border: none;
+            /* --- MOBILE FIX: Make the whole card a tappable area --- */
+            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+            touch-action: manipulation;
+            user-select: none;
+        }
+
+        /* --- MOBILE FIX: Active state feedback on tap --- */
+        .service-card:active {
+            transform: scale(0.98);
+            box-shadow: var(--shadow-sm);
         }
 
         .service-card:hover {
@@ -758,7 +768,7 @@
 
         <div class="services-grid">
             <!-- Mowing -->
-            <div class="service-card mowing" onclick="selectService('Mowing', 'R150 - R450')">
+            <div class="service-card mowing" role="button" tabindex="0" onclick="selectService('Mowing', 'R150 - R450')">
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-title">Mowing</div>
@@ -769,7 +779,7 @@
             </div>
 
             <!-- Gardening -->
-            <div class="service-card gardening" onclick="selectService('Gardening', 'R200 - R600')">
+            <div class="service-card gardening" role="button" tabindex="0" onclick="selectService('Gardening', 'R200 - R600')">
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-title">Gardening</div>
@@ -780,7 +790,7 @@
             </div>
 
             <!-- Flower Planting -->
-            <div class="service-card flower" onclick="selectService('Flower Planting', 'R180 - R500')">
+            <div class="service-card flower" role="button" tabindex="0" onclick="selectService('Flower Planting', 'R180 - R500')">
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-title">Flower Planting</div>
@@ -791,7 +801,7 @@
             </div>
 
             <!-- Painting -->
-            <div class="service-card painting" onclick="selectService('Painting', 'R300 - R900')">
+            <div class="service-card painting" role="button" tabindex="0" onclick="selectService('Painting', 'R300 - R900')">
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-title">Painting</div>
@@ -838,8 +848,8 @@
                             <input type="tel" id="phone" placeholder="+27 82 123 4567" required>
                         </div>
                         <div class="form-group full-width">
-                            <label>Instructions (e.g. gate code, specific areas to focus on)</label>
-                            <textarea id="instructions" rows="4" placeholder="Gate code 1234, please focus on the back lawn."></textarea>
+                            <label>Instructions (e.g. specific areas to focus on)</label>
+                            <textarea id="instructions" rows="4" placeholder="Please focus on the back lawn."></textarea>
                         </div>
                     </div>
 
