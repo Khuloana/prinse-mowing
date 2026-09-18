@@ -3,33 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Book mowing, gardening, flower planting and painting services in minutes. See your price range instantly, no account needed.">
+    <meta name="theme-color" content="#0A2A1A">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
     <title>Prinse Mowing | Premium Garden Services</title>
-    <!-- Modern Fonts: Outfit for headings, Inter for body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Premium, Modern Color Palette */
-            --primary-dark: #0A2A1A; /* Deep Forest Green */
-            --primary-emerald: #107C41; /* Rich Emerald */
-            --primary-light: #E8F5E9; /* Soft Sage */
-            --accent-gold: #D4AF37; /* Premium Gold */
+            --primary-dark: #0A2A1A;
+            --primary-emerald: #107C41;
+            --primary-light: #E8F5E9;
+            --accent-gold: #D4AF37;
             --accent-gold-hover: #C5A017;
-            --bg-cream: #F9F9F8; /* Modern Off-white */
+            --bg-cream: #F9F9F8;
             --bg-white: #FFFFFF;
             --text-main: #1A1A1A;
             --text-muted: #666666;
             --border-light: #E5E5E5;
-            
-            /* Modern Shadows & Radii */
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
             --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
             --radius-card: 24px;
             --radius-input: 16px;
             --radius-pill: 9999px;
-            
             --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -53,7 +51,6 @@
             font-family: 'Outfit', sans-serif;
         }
 
-        /* --- Utility Classes --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -85,13 +82,17 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
 
+        .btn-primary:disabled {
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .btn-large {
             padding: 20px 40px;
             font-size: 1.1rem;
             width: 100%;
         }
 
-        /* --- Header --- */
         header {
             background-color: rgba(249, 249, 248, 0.85);
             backdrop-filter: blur(16px);
@@ -138,14 +139,12 @@
             min-height: 40px;
         }
 
-        /* --- Hero Section --- */
         .hero {
             position: relative;
             padding: 60px 0 40px 0;
             min-height: 80vh;
             display: flex;
             align-items: center;
-            /* --- IMAGE PLACEHOLDER 1: MAIN HERO BACKGROUND --- */
             background: linear-gradient(135deg, rgba(10, 42, 26, 0.95), rgba(16, 124, 65, 0.85)), 
                         url('images/hero.png') center/cover;
             color: var(--bg-white);
@@ -205,7 +204,6 @@
             font-weight: 500;
         }
 
-        /* --- Features --- */
         .features {
             padding: 16px 0 40px 0;
         }
@@ -258,9 +256,9 @@
             color: var(--text-muted);
         }
 
-        /* --- Main App Section --- */
         .app-section {
             padding: 30px 0 60px 0;
+            scroll-margin-top: 80px;
         }
 
         .step-label {
@@ -284,7 +282,7 @@
             font-size: 0.95rem;
         }
 
-        /* Services Grid */
+        /* --- SERVICES GRID - Now using buttons for native clickability --- */
         .services-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -303,56 +301,52 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
+            /* Reset button styles */
             border: none;
-            /* --- MOBILE FIX: Make the whole card a tappable area --- */
-            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+            padding: 0;
+            background: none;
+            font-family: inherit;
+            text-align: left;
+            width: 100%;
+            /* Mobile tap settings */
+            -webkit-tap-highlight-color: rgba(212, 175, 55, 0.2);
             touch-action: manipulation;
-            user-select: none;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
-        /* --- MOBILE FIX: Active state feedback on tap --- */
         .service-card:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
             box-shadow: var(--shadow-sm);
         }
 
-        .service-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            z-index: 10;
+        /* Background image now on a dedicated inner div - no more ::before interference */
+        .card-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* ==========================================================
-           SERVICE CARD IMAGE PLACEHOLDERS (2, 3, 4, 5)
-           Replace 'images/...' with your actual file names
-           ========================================================== */
-        .service-card.mowing { 
+        .service-card:hover .card-bg {
+            transform: scale(1.08);
+        }
+
+        .service-card.mowing .card-bg { 
             background: linear-gradient(to top, rgba(10, 42, 26, 0.95), rgba(10, 42, 26, 0.2)), 
                         url('images/mowing.png') center/cover; 
         }
-        .service-card.gardening { 
+        .service-card.gardening .card-bg { 
             background: linear-gradient(to top, rgba(10, 42, 26, 0.95), rgba(10, 42, 26, 0.2)), 
                         url('images/gardening.png') center/cover; 
         }
-        .service-card.flower { 
+        .service-card.flower .card-bg { 
             background: linear-gradient(to top, rgba(10, 42, 26, 0.95), rgba(10, 42, 26, 0.2)), 
                         url('images/flower.png') center/cover; 
         }
-        .service-card.painting { 
+        .service-card.painting .card-bg { 
             background: linear-gradient(to top, rgba(10, 42, 26, 0.95), rgba(10, 42, 26, 0.2)), 
                         url('images/painting.png') center/cover; 
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: inherit;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 1;
-        }
-        .service-card:hover::before {
-            transform: scale(1.08);
         }
 
         .card-content {
@@ -360,6 +354,7 @@
             padding: 20px;
             color: var(--bg-white);
             z-index: 2;
+            pointer-events: none; /* Let clicks pass through to the button */
         }
 
         .card-header {
@@ -393,12 +388,18 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* Dynamic Form Section */
         .booking-container {
             display: none;
             grid-template-columns: 1fr;
             gap: 24px;
             margin-top: 32px;
+        }
+
+        /* THE FIX: this rule was previously only defined inside the
+           min-width:600px media query, so on phones the "active" class
+           was added by JS but nothing ever switched display back on. */
+        .booking-container.active {
+            display: grid;
             animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
@@ -462,7 +463,6 @@
             box-shadow: 0 0 0 4px rgba(16, 124, 65, 0.1);
         }
 
-        /* Pricing Options Styling */
         .pricing-options {
             display: flex;
             flex-direction: column;
@@ -599,7 +599,6 @@
             margin-bottom: 24px;
         }
 
-        /* --- Footer --- */
         footer {
             background-color: var(--primary-dark);
             color: var(--bg-white);
@@ -637,7 +636,6 @@
             opacity: 0.5;
         }
 
-        /* --- Larger Screens (Tablets & Desktop) --- */
         @media (min-width: 600px) {
             .container {
                 padding: 0 24px;
@@ -679,7 +677,6 @@
                 height: 300px;
             }
             .booking-container.active {
-                display: grid;
                 grid-template-columns: 1.5fr 1fr;
                 gap: 32px;
             }
@@ -700,7 +697,6 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <div class="container header-inner">
             <a href="#" class="logo">
@@ -713,7 +709,6 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -731,7 +726,6 @@
         </div>
     </section>
 
-    <!-- Features Bar -->
     <section class="features">
         <div class="container features-grid">
             <div class="feature-item">
@@ -758,17 +752,16 @@
         </div>
     </section>
 
-    <!-- Main App Section -->
     <main class="app-section container" id="book">
         
-        <!-- STEP 1: Choose Service -->
         <div class="step-label">STEP 1</div>
         <h2 class="section-title">Choose a service</h2>
         <p class="section-subtitle">Tap the one you need.</p>
 
-        <div class="services-grid">
-            <!-- Mowing -->
-            <div class="service-card mowing" role="button" tabindex="0" onclick="selectService('Mowing', 'R150 - R450')">
+        <div class="services-grid" role="group" aria-label="Choose a service">
+            <!-- Now using <button> elements - natively clickable on all mobile browsers -->
+            <button type="button" class="service-card mowing" data-service="Mowing" data-price="R150 - R450" aria-label="Mowing, R150 to R450">
+                <div class="card-bg"></div>
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-title">Mowing</div>
@@ -776,10 +769,10 @@
                     <div class="card-desc">Neat, even cut</div>
                     <div class="price-tag">R150 – R450</div>
                 </div>
-            </div>
+            </button>
 
-            <!-- Gardening -->
-            <div class="service-card gardening" role="button" tabindex="0" onclick="selectService('Gardening', 'R200 - R600')">
+            <button type="button" class="service-card gardening" data-service="Gardening" data-price="R200 - R600" aria-label="Gardening, R200 to R600">
+                <div class="card-bg"></div>
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-title">Gardening</div>
@@ -787,10 +780,10 @@
                     <div class="card-desc">Trim, weed, tidy</div>
                     <div class="price-tag">R200 – R600</div>
                 </div>
-            </div>
+            </button>
 
-            <!-- Flower Planting -->
-            <div class="service-card flower" role="button" tabindex="0" onclick="selectService('Flower Planting', 'R180 - R500')">
+            <button type="button" class="service-card flower" data-service="Flower Planting" data-price="R180 - R500" aria-label="Flower Planting, R180 to R500">
+                <div class="card-bg"></div>
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-title">Flower Planting</div>
@@ -798,10 +791,10 @@
                     <div class="card-desc">Beds & borders</div>
                     <div class="price-tag">R180 – R500</div>
                 </div>
-            </div>
+            </button>
 
-            <!-- Painting -->
-            <div class="service-card painting" role="button" tabindex="0" onclick="selectService('Painting', 'R300 - R900')">
+            <button type="button" class="service-card painting" data-service="Painting" data-price="R300 - R900" aria-label="Painting, R300 to R900">
+                <div class="card-bg"></div>
                 <div class="card-content">
                     <div class="card-header">
                         <div class="card-title">Painting</div>
@@ -809,58 +802,53 @@
                     <div class="card-desc">Walls & trim</div>
                     <div class="price-tag">R300 – R900</div>
                 </div>
-            </div>
+            </button>
         </div>
 
-        <!-- Placeholder before selection -->
         <div id="placeholder-box" style="border: 2px dashed var(--border-light); border-radius: var(--radius-card); padding: 32px; text-align: center; color: var(--text-muted); background: var(--bg-white); transition: var(--transition-smooth);">
             Pick a service above to see your price range and book.
         </div>
 
-        <!-- STEP 2, 3 & 4: Booking Form, Price & Pricing Preference -->
         <div class="booking-container" id="booking-form-container">
             
-            <!-- Details Form -->
             <div class="details-card">
                 <div class="step-label">STEP 2</div>
                 <h2 class="section-title" style="font-size: 1.5rem; margin-bottom: 24px;">Your details</h2>
                 
-                <form id="bookingForm" onsubmit="submitBooking(event)">
+                <form id="bookingForm" onsubmit="submitBooking(event)" novalidate>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" id="firstName" placeholder="Thabo" required>
+                            <label for="firstName">Full Name</label>
+                            <input type="text" id="firstName" name="firstName" autocomplete="given-name" placeholder="Thabo" required>
                         </div>
                         <div class="form-group">
-                            <label>Surname</label>
-                            <input type="text" id="lastName" placeholder="Mokoena" required>
+                            <label for="lastName">Surname</label>
+                            <input type="text" id="lastName" name="lastName" autocomplete="family-name" placeholder="Mokoena" required>
                         </div>
                         <div class="form-group full-width">
-                            <label>Service Address</label>
-                            <input type="text" id="address" placeholder="123 Main Street, Suburb, City" required>
+                            <label for="address">Service Address</label>
+                            <input type="text" id="address" name="address" autocomplete="street-address" placeholder="123 Main Street, Suburb, City" required>
                         </div>
                         <div class="form-group full-width">
-                            <label>Preferred Date & Time</label>
-                            <input type="datetime-local" id="serviceDate" required>
+                            <label for="serviceDate">Preferred Date & Time</label>
+                            <input type="datetime-local" id="serviceDate" name="serviceDate" required>
                         </div>
                         <div class="form-group full-width">
-                            <label>Phone Number</label>
-                            <input type="tel" id="phone" placeholder="+27 82 123 4567" required>
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+27 82 123 4567" required>
                         </div>
                         <div class="form-group full-width">
-                            <label>Instructions (e.g. specific areas to focus on)</label>
-                            <textarea id="instructions" rows="4" placeholder="Please focus on the back lawn."></textarea>
+                            <label for="instructions">Instructions (e.g. gate code, specific areas to focus on)</label>
+                            <textarea id="instructions" name="instructions" rows="4" placeholder="Gate code 1234, please focus on the back lawn."></textarea>
                         </div>
                     </div>
 
-                    <!-- STEP 4: Pricing Preference -->
                     <div style="margin-top: 24px; border-top: 1px solid var(--border-light); padding-top: 24px;">
-                        <div class="step-label" style="margin-bottom: 12px;">STEP 4</div>
+                        <div class="step-label" style="margin-bottom: 12px;">STEP 3</div>
                         <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 8px;">How would you like to proceed with pricing?</h3>
                         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">Choose the option that works best for you.</p>
 
                         <div class="pricing-options">
-                            <!-- Option 1: Visit -->
                             <label class="radio-option" onclick="toggleBudgetInput(false)">
                                 <input type="radio" name="pricingPreference" value="Book an assessment visit" checked>
                                 <div class="radio-content">
@@ -869,7 +857,6 @@
                                 </div>
                             </label>
 
-                            <!-- Option 2: Budget -->
                             <label class="radio-option" onclick="toggleBudgetInput(true)">
                                 <input type="radio" name="pricingPreference" value="Set my budget">
                                 <div class="radio-content">
@@ -878,12 +865,10 @@
                                 </div>
                             </label>
                             
-                            <!-- Budget Input (Hidden by default) -->
                             <div class="budget-input-wrapper" id="budget-input-wrapper">
                                 <input type="number" id="budgetAmount" placeholder="Enter your max, e.g. 300" min="50">
                             </div>
 
-                            <!-- Option 3: Estimate -->
                             <label class="radio-option" onclick="toggleBudgetInput(false)">
                                 <input type="radio" name="pricingPreference" value="Proceed with the estimate">
                                 <div class="radio-content">
@@ -896,9 +881,8 @@
                 </form>
             </div>
 
-            <!-- Price & Booking -->
             <div class="price-card">
-                <div class="step-label">STEP 3</div>
+                <div class="step-label">YOUR ESTIMATE</div>
                 <h3 id="summaryServiceName">Price range - Mowing</h3>
                 <div class="price-display" id="summaryPrice">R150 – R450</div>
                 
@@ -907,7 +891,7 @@
                 </div>
                 <p class="price-note">Final price will be confirmed after assessment.</p>
 
-                <button type="button" class="btn-primary btn-large" onclick="submitBooking()">BOOK NOW VIA WHATSAPP</button>
+                <button type="button" class="btn-primary btn-large" id="bookNowBtn" onclick="submitBooking()">BOOK NOW VIA WHATSAPP</button>
                 <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px;">
                     WhatsApp opens with your booking ready — just tap send.
                 </p>
@@ -917,7 +901,6 @@
 
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <button id="footerWhatsappBtn" class="whatsapp-btn">
@@ -930,29 +913,63 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Interactivity -->
     <script>
         let selectedService = "";
         let selectedPrice = "";
         
-        // IMPORTANT: Replace this with your actual WhatsApp number (Country code + number, no + or spaces)
         const businessPhoneNumber = "27691385167"; 
 
-        // Function to handle clicking a service card
+        // --- Direct event listeners on the buttons ---
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Get all service buttons
+            const serviceButtons = document.querySelectorAll('.service-card');
+            
+            // Attach click listener to each button
+            serviceButtons.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const service = this.dataset.service;
+                    const price = this.dataset.price;
+                    selectService(service, price);
+                });
+            });
+            
+            // Footer WhatsApp button
+            document.getElementById('footerWhatsappBtn').addEventListener('click', function() {
+                let message = "Hello Prinse Mowing, I have a question about your services.";
+                
+                if (selectedService) {
+                    message = `Hello Prinse Mowing, I'm interested in your *${selectedService}* service (estimated ${selectedPrice}). I have a question:`;
+                }
+                
+                const whatsappUrl = `https://wa.me/${businessPhoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            });
+        });
+
+        // Function to handle service selection
         function selectService(serviceName, priceRange) {
             selectedService = serviceName;
             selectedPrice = priceRange;
 
+            // Update the price summary
             document.getElementById('summaryServiceName').innerText = `Price range - ${serviceName}`;
             document.getElementById('summaryPrice').innerText = priceRange;
 
+            // Hide placeholder and show form
             const placeholder = document.getElementById('placeholder-box');
-            placeholder.style.opacity = '0';
-            setTimeout(() => {
-                placeholder.style.display = 'none';
-                document.getElementById('booking-form-container').classList.add('active');
-                document.getElementById('booking-form-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 200);
+            const formContainer = document.getElementById('booking-form-container');
+            
+            placeholder.style.display = 'none';
+            formContainer.classList.add('active');
+
+            // Small delay to allow the form to render before scrolling
+            setTimeout(function() {
+                const yOffset = -80; // Offset for the sticky header
+                const y = formContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }, 50);
         }
 
         // Function to toggle the budget input field
@@ -978,6 +995,12 @@
                 return;
             }
 
+            const bookBtn = document.getElementById('bookNowBtn');
+            const originalLabel = bookBtn.textContent;
+            bookBtn.disabled = true;
+            bookBtn.style.opacity = '0.7';
+            bookBtn.textContent = 'OPENING WHATSAPP…';
+
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
             const address = document.getElementById('address').value;
@@ -985,7 +1008,6 @@
             const phone = document.getElementById('phone').value;
             const instructions = document.getElementById('instructions').value;
 
-            // Format the date nicely
             const dateObj = new Date(serviceDate);
             const formattedDate = dateObj.toLocaleDateString('en-ZA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             const formattedTime = dateObj.toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit' });
@@ -998,7 +1020,6 @@
                 pricingText += ` (Max: R${budgetAmount})`;
             }
 
-            // Construct WhatsApp message
             const message = `Hello Prinse Mowing, I would like to book a service.%0A%0A` +
                             `*Service:* ${selectedService}%0A` +
                             `*Estimated Price:* ${selectedPrice}%0A` +
@@ -1012,19 +1033,13 @@
 
             const whatsappUrl = `https://wa.me/${businessPhoneNumber}?text=${message}`;
             window.open(whatsappUrl, '_blank');
-        }
 
-        // Function for the general "Chat on WhatsApp" footer button
-        document.getElementById('footerWhatsappBtn').addEventListener('click', function() {
-            let message = "Hello Prinse Mowing, I have a question about your services.";
-            
-            if (selectedService) {
-                message = `Hello Prinse Mowing, I'm interested in your *${selectedService}* service (estimated ${selectedPrice}). I have a question:`;
-            }
-            
-            const whatsappUrl = `https://wa.me/${businessPhoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        });
+            setTimeout(function() {
+                bookBtn.disabled = false;
+                bookBtn.style.opacity = '1';
+                bookBtn.textContent = originalLabel;
+            }, 1500);
+        }
     </script>
 </body>
 </html>
