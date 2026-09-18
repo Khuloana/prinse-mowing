@@ -838,8 +838,8 @@
                             <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+27 82 123 4567" required>
                         </div>
                         <div class="form-group full-width">
-                            <label for="instructions">Instructions (e.g. gate code, specific areas to focus on)</label>
-                            <textarea id="instructions" name="instructions" rows="4" placeholder="Gate code 1234, please focus on the back lawn."></textarea>
+                            <label for="instructions">Instructions (e.g. specific areas to focus on)</label>
+                            <textarea id="instructions" name="instructions" rows="4" placeholder="Please focus on the back lawn."></textarea>
                         </div>
                     </div>
 
@@ -912,6 +912,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Compiled from src/supabase.ts — see README.md to rebuild after edits -->
+    <script type="module" src="dist/supabase.js"></script>
 
     <script>
         let selectedService = "";
@@ -986,7 +989,7 @@
         }
 
         // Function to handle final booking submission
-        function submitBooking(e) {
+        async function submitBooking(e) {
             if (e) e.preventDefault(); 
 
             const form = document.getElementById('bookingForm');
@@ -999,7 +1002,7 @@
             const originalLabel = bookBtn.textContent;
             bookBtn.disabled = true;
             bookBtn.style.opacity = '0.7';
-            bookBtn.textContent = 'OPENING WHATSAPP…';
+            bookBtn.textContent = 'SAVING…';
 
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
@@ -1019,6 +1022,28 @@
             if (selectedPricingPref === "Set my budget" && budgetAmount) {
                 pricingText += ` (Max: R${budgetAmount})`;
             }
+
+            // Save to Supabase first (best-effort — a failed/slow save should
+            // never stop the customer from completing the WhatsApp handoff).
+            if (window.saveBookingToSupabase) {
+                const result = await window.saveBookingToSupabase(
+                    { firstName, lastName, phone, address },
+                    {
+                        service: selectedService,
+                        priceRange: selectedPrice,
+                        serviceAddress: address,
+                        preferredDate: dateObj.toISOString(),
+                        instructions: instructions,
+                        pricingPreference: selectedPricingPref,
+                        budgetAmount: selectedPricingPref === "Set my budget" && budgetAmount ? Number(budgetAmount) : null,
+                    }
+                );
+                if (!result.ok) {
+                    console.warn('Booking was not saved to the database:', result.error);
+                }
+            }
+
+            bookBtn.textContent = 'OPENING WHATSAPP…';
 
             const message = `Hello Prinse Mowing, I would like to book a service.%0A%0A` +
                             `*Service:* ${selectedService}%0A` +
