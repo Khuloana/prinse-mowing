@@ -115,86 +115,8 @@ export async function saveBookingToSupabase(
 declare global {
   interface Window {
     saveBookingToSupabase: typeof saveBookingToSupabase;
-    testSaveBookingToSupabase: typeof testSaveBookingToSupabase;
   }
 }
 
-// ---------------------------------------------------------------------
-// DUMMY: Log what would be sent, without touching the database.
-// Flip DRY_RUN to false to actually hit Supabase using the same shape.
-// ---------------------------------------------------------------------
-const DRY_RUN = false;
-
-/**
- * Dummy tester for the customers + bookings insert flow.
- *
- * Usage from the browser console (after dist/supabase.js loads):
- *   await window.testSaveBookingToSupabase();
- *   await window.testSaveBookingToSupabase({ firstName: "Jane" }, { service: "Deep Clean" });
- */
-export async function testSaveBookingToSupabase(
-  customerOverrides = {},
-  bookingOverrides = {}
-) {
-  // 1. Build a realistic customer payload.
-  const customer = {
-    firstName: "Test",
-    lastName: "Customer",
-    phone: "+27820000000",
-    address: "123 Test Street, Cape Town",
-    ...customerOverrides,
-  };
-
-  // 2. Build a realistic booking payload.
-  const booking = {
-    service: "Mowing",
-    priceRange: "R500 - R800",
-    serviceAddress: customer.address,
-    preferredDate: new Date(Date.now() + 86400000).toISOString().slice(0, 10),
-    instructions: "Please ring the bell twice.",
-    pricingPreference: "Proceed with the estimate",
-    budgetAmount: 650,
-    ...bookingOverrides,
-  };
-
-  // 3. Shape it exactly like saveBookingToSupabase would.
-  const customerRow = {
-    first_name: customer.firstName,
-    last_name: customer.lastName,
-    phone: customer.phone,
-    address: customer.address,
-  };
-
-  const bookingRow = {
-    // customer_id is filled after the upsert in the real flow
-    customer_id: "<filled after customer upsert>",
-    service: booking.service,
-    price_range: booking.priceRange,
-    service_address: booking.serviceAddress,
-    preferred_date: booking.preferredDate,
-    instructions: booking.instructions,
-    pricing_preference: booking.pricingPreference,
-    budget_amount: booking.budgetAmount,
-  };
-
-  console.group("[TEST] Booking payload");
-  console.log("Customer row  ->", customerRow);
-  console.log("Booking row   ->", bookingRow);
-  console.groupEnd();
-
-  if (DRY_RUN) {
-    console.info("[TEST] DRY_RUN=true — nothing sent to Supabase.");
-    return { ok: true, dryRun: true, customerRow, bookingRow };
-  }
-
-  // 4. Actually run the real flow.
-  console.info("[TEST] DRY_RUN=false — sending to Supabase…");
-  const result = await saveBookingToSupabase(customer, booking);
-  console.log("[TEST] Supabase result ->", result);
-  return result;
-}
-
-// Expose for console testing.
-window.testSaveBookingToSupabase = testSaveBookingToSupabase;
-
+// Expose for the plain-JS submitBooking() in index.html.
 window.saveBookingToSupabase = saveBookingToSupabase;
